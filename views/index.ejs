@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<!-- <meta http-equiv="refresh" content="5" /> -->
+		<title>Document</title>
+	</head>
+	<body>
+		<h1 id="showLatitude"></h1>
+		<br />
+		<h1 id="showLongitude"></h1>
+		<br />
+		<h1 id="showFecha"></h1>
+		<br />
+		<script>
+			let str;
+			let datos;
+			let latitud;
+			let longitud;
+			let fecha_hora;
+
+			function update() {
+				fetch('/ruta')
+					.then((response) => response.json())
+					.then((json) => {
+						console.log(json);
+						var str = '';
+						for (var i = 0; i < json.msg.data.length; ++i) {
+							str += String.fromCharCode(json.msg.data[i]);
+						}
+
+						datos = str.split(',');
+						latitud = datos[0];
+						longitud = datos[1];
+						fecha_hora = datos[2] + datos[3];
+
+						document.getElementById(
+							'showLatitude'
+						).innerHTML = `Latitud : ${latitud}`;
+						document.getElementById(
+							'showLongitude'
+						).innerHTML = `Longitud : ${longitud}`;
+						document.getElementById(
+							'showFecha'
+						).innerHTML = `Fecha y hora : ${fecha_hora}`;
+
+						setTimeout(update, 2000);
+					});
+			}
+
+			update();
+		</script>
+	</body>
+</html>
