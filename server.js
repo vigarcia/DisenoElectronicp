@@ -30,6 +30,8 @@ app.get('/', function (req, res) {
 	});
 });
 
+app.use(express.static('public'));
+
 app.get('/ruta', function (req, res) {
 	res.json({ msg: mensaje });
 });
