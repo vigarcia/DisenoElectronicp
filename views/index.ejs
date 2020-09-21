@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<link href="/css/hojadisenopagina.css" rel="stylesheet" />
+		<meta charset="utf-8" />
+		<script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css"
+		/>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<!-- <meta http-equiv="refresh" content="5" /> -->
+		<title>Proyecto 2 - Grupo 3</title>
+	</head>
+	<body>
+		<section id="contenedor">
+			<header>
+				<h1><em>Ubicación de tu camión </em></h1>
+			</header>
+			<main>
+				<div id="map"></div>
+				<!-- <script src="/codigomaps.js"></script> -->
+			</main>
+
+			<h1 id="showLatitude"></h1>
+			<br />
+			<h1 id="showLongitude"></h1>
+			<br />
+			<h1 id="showFecha"></h1>
+			<br />
+		</section>
+		<script>
+			let str;
+			let datos;
+			let latitud;
+			let longitud;
+			let fecha_hora;
+			var marker = null;
+
+			function update() {
+				fetch('/ruta')
+					.then((response) => response.json())
+					.then((json) => {
+						console.log(json);
+						var str = '';
+						for (var i = 0; i < json.msg.data.length; ++i) {
+							str += String.fromCharCode(json.msg.data[i]);
+						}
+
+						datos = str.split(',');
+						latitud = datos[0];
+						longitud = datos[1];
+						fecha_hora = datos[2];
+
+						document.getElementById(
+							'showLatitude'
+						).innerHTML = `Latitud : ${latitud}`;
+						document.getElementById(
+							'showLongitude'
+						).innerHTML = `Longitud : ${longitud}`;
+						document.getElementById(
+							'showFecha'
+						).innerHTML = `Fecha y hora : ${fecha_hora}`;
+
+						setTimeout(update, 2000);
+
+						if (marker !== null) {
+							map.removeLayer(marker);
+						}
+						marker = L.marker([latitud, longitud]).addTo(map);
+					});
+			}
+
+			update();
+
+			let map = L.map('map').setView([20, 20], 4);
+			L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+				attribution:
+					'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+				maxZoom: 18,
+			}).addTo(map);
+
+			L.control.scale().addTo(map);
+
+			map.on('refresh', update);
+		</script>
+	</body>
+</html>
