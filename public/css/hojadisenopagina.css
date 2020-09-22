@@ -12,7 +12,7 @@
 header{
 	font-size: 3em;
 	text-align: center;
-	background: url("imagenes/fondo.jpeg");
+	/* background: url("imagenes/fondo.jpeg"); */
 	color:white;
 	margin: 6px 6px;
 }
