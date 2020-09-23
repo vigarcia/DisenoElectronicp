@@ -26,6 +26,5 @@ server.on('listening', () => {
 });
 
 server.bind({
-	address: '192.168.0.6',
-	port: 5000,
+	port: 49153,
   });

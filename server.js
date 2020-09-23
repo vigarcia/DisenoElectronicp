@@ -3,10 +3,10 @@ var mensaje = 'Hola';
 const mysql = require('mysql');
 // Credentials for connecting the database
 const database = mysql.createConnection({
-    host: "nombre",
-	user: "Vadmin",
-	password: "vcontraseña",
-	database: "database"
+    host: "xxxxx",
+	user: "xxxxx",
+	password: "xxxxx",
+	database: "xxxxx"
 });
 // Establish connection
 database.connect((err) => {

@@ -25,6 +25,6 @@ app.get('/data', function (req, res) {
 	// res.json({ msg: msg });
 });
 
-app.listen('8080', function () {
-	console.log(`Example app listening at http://localhost:8080`)
+app.listen('49152', function () {
+	console.log(`Example app listening at http://localhost:49152`)
 });
